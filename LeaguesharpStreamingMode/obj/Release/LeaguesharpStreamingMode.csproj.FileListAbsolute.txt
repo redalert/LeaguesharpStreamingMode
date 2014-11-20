@@ -1,0 +1,12 @@
+F:\Visual Studio Projects\LeaguesharpStreamingMode\LeaguesharpStreamingMode\bin\Release\LeaguesharpStreamingMode.exe.config
+F:\Visual Studio Projects\LeaguesharpStreamingMode\LeaguesharpStreamingMode\bin\Release\LeaguesharpStreamingMode.exe
+F:\Visual Studio Projects\LeaguesharpStreamingMode\LeaguesharpStreamingMode\bin\Release\LeaguesharpStreamingMode.pdb
+F:\Visual Studio Projects\LeaguesharpStreamingMode\LeaguesharpStreamingMode\bin\Release\LeagueSharp.dll
+F:\Visual Studio Projects\LeaguesharpStreamingMode\LeaguesharpStreamingMode\bin\Release\SharpDX.Direct3D9.dll
+F:\Visual Studio Projects\LeaguesharpStreamingMode\LeaguesharpStreamingMode\bin\Release\SharpDX.dll
+F:\Visual Studio Projects\LeaguesharpStreamingMode\LeaguesharpStreamingMode\bin\Release\LeagueSharp.xml
+F:\Visual Studio Projects\LeaguesharpStreamingMode\LeaguesharpStreamingMode\obj\Release\LeaguesharpStreamingMode.csprojResolveAssemblyReference.cache
+F:\Visual Studio Projects\LeaguesharpStreamingMode\LeaguesharpStreamingMode\obj\Release\LeaguesharpStreamingMode.Properties.Resources.resources
+F:\Visual Studio Projects\LeaguesharpStreamingMode\LeaguesharpStreamingMode\obj\Release\LeaguesharpStreamingMode.csproj.GenerateResource.Cache
+F:\Visual Studio Projects\LeaguesharpStreamingMode\LeaguesharpStreamingMode\obj\Release\LeaguesharpStreamingMode.exe
+F:\Visual Studio Projects\LeaguesharpStreamingMode\LeaguesharpStreamingMode\obj\Release\LeaguesharpStreamingMode.pdb
