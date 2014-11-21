@@ -36,7 +36,7 @@ namespace LeaguesharpStreamingMode
         static uint HotKey = 0x24;  //home key
         static void OnWndProc(LeagueSharp.WndEventArgs args)
         {
-            if (args.Msg == 0x100)
+            if (args.Msg == 0x100) //WM_KEYDOWN
             {
                 if (args.WParam == HotKey)
                 {
