@@ -85,7 +85,7 @@ namespace LeaguesharpStreamingMode
             WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.printChat], (byte)asm.push_ebp);
         }
 
-        static bool IsEnabled() { return (System.Runtime.InteropServices.Marshal.ReadByte(new IntPtr(LeaguesharpCore + offsets[version][(int)functionOffset.printChat])) == (byte)asm.ret); }
+        static bool IsEnabled() { return (Marshal.ReadByte(new IntPtr(LeaguesharpCore + offsets[version][(int)functionOffset.printChat])) == (byte)asm.ret); }
 
         static uint HotKey = 0x24;  //home key
         static void OnWndProc(LeagueSharp.WndEventArgs args)
