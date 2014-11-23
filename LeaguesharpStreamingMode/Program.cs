@@ -33,6 +33,12 @@ namespace LeaguesharpStreamingMode
             return 0;
         }
 
+        static byte[] ReadMemory(Int32 address, Int32 length)
+        {
+            MethodInfo _ReadMemory = lib.GetType("LeaguesharpStreamingModelib.MemoryModule").GetMethods()[2];
+            return (byte[])_ReadMemory.Invoke(null, new object[] { address, length });  
+        }
+
         static void WriteMemory(Int32 address, byte value)
         {
             MethodInfo _WriteMemory = lib.GetType("LeaguesharpStreamingModelib.MemoryModule").GetMethods()[4];
@@ -85,14 +91,14 @@ namespace LeaguesharpStreamingMode
             WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.printChat], (byte)asm.push_ebp);
         }
 
-        static bool IsEnabled() { return (Marshal.ReadByte(new IntPtr(LeaguesharpCore + offsets[version][(int)functionOffset.printChat])) == (byte)asm.ret); }
+        static bool IsEnabled() { return ReadMemory(LeaguesharpCore + offsets[version][(int)functionOffset.printChat], 1)[0] == (byte)asm.ret; } //(Marshal.ReadByte(new IntPtr(LeaguesharpCore + offsets[version][(int)functionOffset.printChat])) == (byte)asm.ret); }
 
-        static uint HotKey = 0x24;  //home key
+        static uint hotkey = 0x24;  //home key
         static void OnWndProc(LeagueSharp.WndEventArgs args)
         {
             if (args.Msg == 0x100)
             {
-                if (args.WParam == HotKey)
+                if (args.WParam == hotkey)
                 {
                     if (IsEnabled())
                         Disable();
