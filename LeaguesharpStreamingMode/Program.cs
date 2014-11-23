@@ -5,20 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace LeaguesharpStreamingMode
 {
     class Program
     {
-        static Assembly lib = Assembly.Load(LeaguesharpStreamingMode.Properties.Resources.LeaguesharpStreamingModelib);
+        static Assembly lib = Assembly.Load(LeaguesharpStreamingMode.Properties.Resources.LeaguesharpStreamingModelib); 
         static void Main(string[] args)
         {
-            lib.GetType("LeaguesharpStreamingModelib.StreamingMode").GetMethod("Enable").Invoke(null, null);
+            SetUpOffsets();
+            Enable();
 
             LeagueSharp.Game.OnWndProc += OnWndProc;
             AppDomain.CurrentDomain.DomainUnload += delegate
             {
-                lib.GetType("LeaguesharpStreamingModelib.StreamingMode").GetMethod("Disable").Invoke(null, null);
+                Disable();
             };
         }
 
@@ -31,19 +33,71 @@ namespace LeaguesharpStreamingMode
             return 0;
         }
 
-        static IntPtr LeaguesharpCore_PrintChat = new IntPtr(GetModuleAddress("Leaguesharp.Core.dll") + 0x9B80);
-        static bool IsEnabled() { return (System.Runtime.InteropServices.Marshal.ReadByte(LeaguesharpCore_PrintChat) == 0xC3); }
+        static void WriteMemory(Int32 address, byte value)
+        {
+            MethodInfo _WriteMemory = lib.GetType("LeaguesharpStreamingModelib.MemoryModule").GetMethods()[4];
+            _WriteMemory.Invoke(null, new object[] { address, value });
+        }
+
+        static void WriteMemory(Int32 address, byte[] array)
+        {
+            for (int i = 0; i < array.Length; i++)
+                WriteMemory(address + i, array[i]);
+        }
+
+        static string version = LeagueSharp.Game.Version.Substring(0, 4);
+        static Int32 LeaguesharpCore = GetModuleAddress("Leaguesharp.Core.dll");
+        static Dictionary<string, Int32[]> offsets;
+
+        enum functionOffset : int
+        {
+            drawEvent = 0,
+            printChat = 1,
+            watermark1 = 2
+        }
+
+        enum asm : byte
+        {
+            ret = 0xC3,
+            push_ebp = 0x55,
+            nop = 0x90
+        }
+
+        static void SetUpOffsets()
+        {
+            offsets = new Dictionary<string, Int32[]>();
+            offsets.Add("4.19", new Int32[] { 0x5F40, 0x9B60, 0x9B40 });
+            offsets.Add("4.20", new Int32[] { 0x5F60, 0x9B80, 0x9B60 });
+        }
+
+        static void Enable()
+        {
+            WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.drawEvent], (byte)asm.ret);
+            WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.printChat], (byte)asm.ret);
+            WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.watermark1], new byte[] { (byte)asm.nop, (byte)asm.nop, (byte)asm.nop, 
+                                                                                                         (byte)asm.nop, (byte)asm.nop, (byte)asm.nop });
+           // Marshal.WriteByte(new IntPtr(LeaguesharpCore + offsets[version][(int)functionOffset.printChat]), 0xC3);
+        }
+
+        static void Disable()
+        {
+            WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.drawEvent], (byte)asm.push_ebp);
+            WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.printChat], (byte)asm.push_ebp);
+        }
+
+        static bool IsEnabled() { return (System.Runtime.InteropServices.Marshal.ReadByte(new IntPtr(LeaguesharpCore + offsets[version][(int)functionOffset.printChat])) == (byte)asm.ret); }
+
         static uint HotKey = 0x24;  //home key
         static void OnWndProc(LeagueSharp.WndEventArgs args)
         {
-            if (args.Msg == 0x100) //WM_KEYDOWN
+            if (args.Msg == 0x100)
             {
                 if (args.WParam == HotKey)
                 {
                     if (IsEnabled())
-                        lib.GetType("LeaguesharpStreamingModelib.StreamingMode").GetMethod("Disable").Invoke(null, null);
+                        Disable();
                     else
-                        lib.GetType("LeaguesharpStreamingModelib.StreamingMode").GetMethod("Enable").Invoke(null, null);
+                        Enable();
                 }
             }
         }
