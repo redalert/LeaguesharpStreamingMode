@@ -93,12 +93,12 @@ namespace LeaguesharpStreamingMode
 
         static bool IsEnabled() { return ReadMemory(LeaguesharpCore + offsets[version][(int)functionOffset.printChat], 1)[0] == (byte)asm.ret; } //(Marshal.ReadByte(new IntPtr(LeaguesharpCore + offsets[version][(int)functionOffset.printChat])) == (byte)asm.ret); }
 
-        static uint hotkey = 0x24;  //home key
+        static uint[] hotkeys = { 0x24, 0x2D };  //home key, insert key
         static void OnWndProc(LeagueSharp.WndEventArgs args)
         {
             if (args.Msg == 0x100) //WM_KEYDOWN
             {
-                if (args.WParam == hotkey)
+                if (hotkeys.Contains(args.WParam))
                 {
                     if (IsEnabled())
                         Disable();
