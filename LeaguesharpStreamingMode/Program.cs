@@ -81,7 +81,7 @@ namespace LeaguesharpStreamingMode
         {
             WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.drawEvent], (byte)asm.ret);
             WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.printChat], (byte)asm.ret);
-            WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.loadingScreenWatermark, new byte[] { (byte)asm.nop, (byte)asm.nop, (byte)asm.nop, 
+            WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.loadingScreenWatermark], new byte[] { (byte)asm.nop, (byte)asm.nop, (byte)asm.nop, 
                                                                                                          (byte)asm.nop, (byte)asm.nop, (byte)asm.nop });
         }
 
