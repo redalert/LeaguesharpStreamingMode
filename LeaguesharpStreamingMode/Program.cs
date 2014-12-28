@@ -59,7 +59,7 @@ namespace LeaguesharpStreamingMode
         {
             drawEvent = 0,
             printChat = 1,
-            watermark1 = 2
+            loadingScreenWatermark = 2
         }
 
         enum asm : byte
@@ -74,16 +74,15 @@ namespace LeaguesharpStreamingMode
             offsets = new Dictionary<string, Int32[]>();
             offsets.Add("4.19", new Int32[] { 0x5F40, 0x9B60, 0x9B40 });
             offsets.Add("4.20", new Int32[] { 0x6040, 0x9C00, 0x9BE0 });
-            offsets.Add("4.21", new Int32[] { 0x62D0, 0xA090, 0x0 });
+            offsets.Add("4.21", new Int32[] { 0x6430, 0xA230, 0xA1B5 });
         }
 
         static void Enable()
         {
             WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.drawEvent], (byte)asm.ret);
             WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.printChat], (byte)asm.ret);
-            WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.watermark1], new byte[] { (byte)asm.nop, (byte)asm.nop, (byte)asm.nop, 
+            WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.loadingScreenWatermark, new byte[] { (byte)asm.nop, (byte)asm.nop, (byte)asm.nop, 
                                                                                                          (byte)asm.nop, (byte)asm.nop, (byte)asm.nop });
-           // Marshal.WriteByte(new IntPtr(LeaguesharpCore + offsets[version][(int)functionOffset.printChat]), 0xC3);
         }
 
         static void Disable()
@@ -92,7 +91,7 @@ namespace LeaguesharpStreamingMode
             WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.printChat], (byte)asm.push_ebp);
         }
 
-        static bool IsEnabled() { return ReadMemory(LeaguesharpCore + offsets[version][(int)functionOffset.printChat], 1)[0] == (byte)asm.ret; } //(Marshal.ReadByte(new IntPtr(LeaguesharpCore + offsets[version][(int)functionOffset.printChat])) == (byte)asm.ret); }
+        static bool IsEnabled() { return ReadMemory(LeaguesharpCore + offsets[version][(int)functionOffset.printChat], 1)[0] == (byte)asm.ret; }
 
         static uint[] hotkeys = { 0x24, 0x2D };  //home key, insert key
         static void OnWndProc(LeagueSharp.WndEventArgs args)
