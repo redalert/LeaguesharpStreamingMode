@@ -84,7 +84,7 @@ namespace LeaguesharpStreamingMode
                                                                                                          (byte)0x44, (byte)0x4C, (byte)0x6F, (byte)0x61, 
                                                                                                          (byte)0x64, (byte)0x65, (byte)0x72, (byte)0x20 });
         
-            WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.changePrintChat]       new byte[] { (byte)0x3C,(byte)0x66 ,(byte)0x6F ,
+            WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.changePrintChat],        new byte[] { (byte)0x3C,(byte)0x66 ,(byte)0x6F ,
                                                                                                          (byte)0x6E,(byte)0x74,(byte)0x20,(byte)0x63,
                                                                                                          (byte)0x6F,(byte)0x6C,(byte)0x6F,(byte)0x72,
                                                                                                          (byte)0x3D,(byte)0x22,(byte)0x23,(byte)0x34,
