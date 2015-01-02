@@ -128,7 +128,8 @@ namespace LeaguesharpStreamingMode
 
         static void OnWndProc(LeagueSharp.WndEventArgs args)
         {
-            Enable();
+            for (int i = 0; i < 2; i++)
+                Enable();
         }
     }
 }
