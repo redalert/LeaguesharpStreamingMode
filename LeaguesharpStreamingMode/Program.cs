@@ -59,7 +59,7 @@ namespace LeaguesharpStreamingMode
         {
             drawEvent = 0,
             printChat = 1,
-            loadingScreenWatermark = 2
+            loadingScreenWatermark = 2,
             watermarkChanging = 3
         }
 
