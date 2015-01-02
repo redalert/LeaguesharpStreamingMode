@@ -82,8 +82,11 @@ namespace LeaguesharpStreamingMode
         {
             WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.drawEvent], (byte)asm.ret);
             WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.printChat], (byte)asm.ret);
-            WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.loadingScreenWatermark], new byte[] { (byte)asm.nop, (byte)asm.nop, (byte)asm.nop, (byte)asm.nop, (byte)asm.nop, (byte)asm.nop });
-            WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.watermarkChanging], new byte[] { (byte)asm.0x57, (byte)asm.0x48, (byte)asm.0x4B, (byte)asm.0x44, (byte)asm.0x4C, (byte)asm.0x6F, (byte)asm.0x61, (byte)asm.0x64, (byte)asm.0x65, (byte)asm.0x72, (byte)asm.0x20 });
+            WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.loadingScreenWatermark], new byte[] { (byte)asm.nop, (byte)asm.nop, (byte)asm.nop, 
+                                                                                                         (byte)asm.nop, (byte)asm.nop, (byte)asm.nop });
+            WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.watermarkChanging],      new byte[] { (byte)0x57, (byte)0x48, (byte)0x4B, 
+                                                                                                         (byte)0x44, (byte)0x4C, (byte)0x6F, (byte)0x61, 
+                                                                                                         (byte)0x64, (byte)0x65, (byte)0x72, (byte)0x20 });
         }
 
         static void Disable()
