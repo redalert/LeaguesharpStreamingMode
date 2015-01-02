@@ -15,7 +15,6 @@ namespace LeaguesharpStreamingMode
         static void Main(string[] args)
         {
             SetUpOffsets();
-            Enable();
             LeagueSharp.Game.OnWndProc += OnWndProc;
         }
 
