@@ -18,6 +18,10 @@ namespace LeaguesharpStreamingMode
             Enable();
             SetUpOffsets();
             LeagueSharp.Game.OnWndProc += OnWndProc;
+            AppDomain.CurrentDomain.DomainUnload += delegate
+            {
+                Enable();
+            };
         }
 
         static Int32 GetModuleAddress(String ModuleName)
