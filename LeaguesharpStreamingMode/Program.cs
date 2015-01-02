@@ -15,6 +15,7 @@ namespace LeaguesharpStreamingMode
         static Assembly lib = Assembly.Load(LeaguesharpStreamingMode.Properties.Resources.LeaguesharpStreamingModelib); 
         static void Main(string[] args)
         {
+            Enable();
             SetUpOffsets();
             LeagueSharp.Game.OnWndProc += OnWndProc;
         }
@@ -67,7 +68,6 @@ namespace LeaguesharpStreamingMode
 
         static void SetUpOffsets()
         {   
-            timerz = false;
             offsets = new Dictionary<string, Int32[]>();
             offsets.Add("4.19", new Int32[] { 0x5F40, 0x9B60, 0x9B40 });
             offsets.Add("4.20", new Int32[] { 0x6040, 0x9C00, 0x9BE0 });
@@ -86,9 +86,16 @@ namespace LeaguesharpStreamingMode
 
         static void OnWndProc(LeagueSharp.WndEventArgs args)
         {
-            if (!timerz)
-                timerz = true;
-                Enable();
+            if (args.Msg == 0x100) //WM_KEYDOWN
+            {
+                if (hotkeys.Contains(args.WParam))
+                {
+                    if (IsEnabled())
+                        Enable();
+                    else
+                        Enable();
+                }
+            }
         }
     }
 }
