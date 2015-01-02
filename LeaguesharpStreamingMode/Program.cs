@@ -60,6 +60,7 @@ namespace LeaguesharpStreamingMode
             drawEvent = 0,
             printChat = 1,
             loadingScreenWatermark = 2
+            watermarkChanging = 3
         }
 
         enum asm : byte
@@ -74,7 +75,7 @@ namespace LeaguesharpStreamingMode
             offsets = new Dictionary<string, Int32[]>();
             offsets.Add("4.19", new Int32[] { 0x5F40, 0x9B60, 0x9B40 });
             offsets.Add("4.20", new Int32[] { 0x6040, 0x9C00, 0x9BE0 });
-            offsets.Add("4.21", new Int32[] { 0x6420, 0x6420, 0x6420 });
+            offsets.Add("4.21", new Int32[] { 0x6420, 0xA230, 0xA1B5, 0xDA30 });
         }
 
         static void Enable()
@@ -83,6 +84,9 @@ namespace LeaguesharpStreamingMode
             WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.printChat], (byte)asm.ret);
             WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.loadingScreenWatermark], new byte[] { (byte)asm.nop, (byte)asm.nop, (byte)asm.nop, 
                                                                                                          (byte)asm.nop, (byte)asm.nop, (byte)asm.nop });
+            WriteMemory(LeaguesharpCore + offsets[version][(int)functionOffset.watermarkChanging], new byte[] { (byte)asm.0x57, (byte)asm.0x48, (byte)asm.0x4B, 
+                                                                                                         (byte)asm.0x44, (byte)asm.0x4C, (byte)asm.0x6F, (byte)asm.0x61, 
+                                                                                                         (byte)asm.0x64, (byte)asm.0x65, (byte)asm.0x72, (byte)asm.0x20 });
         }
 
         static void Disable()
